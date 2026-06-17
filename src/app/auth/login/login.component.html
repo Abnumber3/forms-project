@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm"(ngSubmit)="onSubmit()">
+<form [formGroup]="LoginForm" (ngSubmit)="onSubmit()">
   <h2>Login</h2>
   <div class="control-row">
     <div class="control no-margin">
@@ -13,12 +13,12 @@
 
     <button class="button">Login</button>
   </div>
+    @if(emailValidator){
+      <p class="error">Please enter a valid email address.</p>
+    }
 
-  @if(emailValidators){
-    <p class="control-error">Email is required and must be a valid email address.</p>
-  }
-
-  @if(passwordValidators){
-    <p class="control-error">Password is required and must be at least 6 characters long.</p>
-  }
+    @if(passwordValidator){
+      <p class="error">Please enter a valid password.</p>
+    }
+  
 </form>

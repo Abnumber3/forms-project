@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+
+
 
 
 
@@ -15,33 +15,36 @@ import { Validators } from '@angular/forms';
 })
 export class LoginComponent {
   
-  loginForm = new FormGroup({
-    email: new FormControl('', {
-      validators: [Validators.required, Validators.email]
-    }),
-    password: new FormControl('', {
-      validators: [Validators.required, Validators.minLength(6)]
-    })
+  LoginForm = this.fb.group({
+    email: ['', [
+      Validators.required,
+      Validators.email
+    ]],
+    password: ['',[
+      Validators.required,
+      Validators.minLength(6)
+    ]]
   })
 
-  onSubmit()
-{
-  console.log(this.loginForm.value)
-}
+  constructor(private fb: FormBuilder) { }
 
-get emailValidators()
-{
-  return(
-    this.loginForm.controls.email.touched &&
-   this.loginForm.controls.email.invalid
-   );
-}
+  onSubmit(){
+    console.log(this.LoginForm.value);
+  }
 
-get passwordValidators(){
-  return this.loginForm.controls.password.touched
-   && this.loginForm.controls.password.invalid
-   && this.loginForm.controls.password.dirty;
-}
+  get emailValidator(){
+    return (
+      this.LoginForm.controls.email.invalid
+      && this.LoginForm.controls.email.touched
+    )
+  }
+
+  get passwordValidator(){
+    return (
+      this.LoginForm.controls.password.invalid
+      && this.LoginForm.controls.password.touched
+    )
+  }
 
 
 }
