@@ -1,8 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-
-
-
 
 
 
@@ -13,7 +10,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit  {
   
   LoginForm = this.fb.group({
     email: ['', [
@@ -28,14 +25,24 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder) { }
 
+  ngOnInit() {
+
+    this.LoginForm.valueChanges.subscribe({
+      next: ((value)=>{
+        return  window.localStorage.setItem('LoginData', JSON.stringify(value));
+      })
+    })
+  }
+
   onSubmit(){
     console.log(this.LoginForm.value);
   }
 
   get emailValidator(){
     return (
+      this.LoginForm.controls.email.touched
+      && this.LoginForm.controls.email.dirty &&
       this.LoginForm.controls.email.invalid
-      && this.LoginForm.controls.email.touched
     )
   }
 
