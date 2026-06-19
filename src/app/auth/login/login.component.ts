@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit  {
 
     this.LoginForm.valueChanges.subscribe({
       next: ((value)=>{
-        return  window.localStorage.setItem('LoginData', JSON.stringify(value));
+        return  window.localStorage.setItem('LoginData', JSON.stringify({email: value.email}));
       })
     })
   }
