@@ -12,6 +12,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit  {
   
+  
   LoginForm = this.fb.group({
     email: ['', [
       Validators.required,
@@ -26,6 +27,15 @@ export class LoginComponent implements OnInit  {
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
+
+    const storedEmail = window.localStorage.getItem('LoginData')
+
+    if(storedEmail){
+      const loadedEmail = JSON.parse(storedEmail);
+      this.LoginForm.patchValue({
+        email: loadedEmail.email
+      })
+    }
 
     this.LoginForm.valueChanges.subscribe({
       next: ((value)=>{
