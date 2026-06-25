@@ -26,12 +26,32 @@ export class SignupComponent {
   constructor(private fb: FormBuilder){} 
 
 
-  signUp(){
 
+  get emailValidators(){
+    return(
+      this.signupForm.controls.email.touched &&
+      this.signupForm.controls.email.dirty &&
+      this.signupForm.controls.email.invalid
+    )
+  }
+
+  get passwordValidators(){
+
+    return(
+        this.signupForm.controls.password.invalid &&
+        this.signupForm.controls.password.touched
+    )
+  }
+
+
+
+
+  signUp(){
+     console.log(this.signupForm.value);
   }
 
   resetForm(){
-
+    this.signupForm.reset();
   }
   
 }
